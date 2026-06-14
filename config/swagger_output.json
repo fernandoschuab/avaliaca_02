@@ -283,7 +283,7 @@
       }
     },
     "/api/atendimentos/{id}/iniciar": {
-      "patch": {
+      "post": {
         "tags": [
           "Atendimentos"
         ],
@@ -329,7 +329,7 @@
       }
     },
     "/api/atendimentos/{id}/finalizar": {
-      "patch": {
+      "post": {
         "tags": [
           "Atendimentos"
         ],

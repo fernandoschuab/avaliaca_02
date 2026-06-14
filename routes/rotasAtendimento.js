@@ -24,7 +24,7 @@ router.get('/:id', ehAutenticado, ehRecepcao, /* #swagger.tags = ['Atendimentos'
     #swagger.responses[404] = { description: 'Atendimento não encontrado' }
 */ controllerAtendimento.consultarPorId);
 
-router.patch('/:id/iniciar', ehAutenticado, ehVeterinario, /* #swagger.tags = ['Atendimentos']
+router.post('/:id/iniciar', ehAutenticado, ehVeterinario, /* #swagger.tags = ['Atendimentos']
     #swagger.summary = 'Inicia um atendimento'
     #swagger.security = [{ BearerAuth: [] }]
     #swagger.parameters['id'] = { in: 'path', required: true, type: 'integer', description: 'ID do atendimento' }
@@ -35,7 +35,7 @@ router.patch('/:id/iniciar', ehAutenticado, ehVeterinario, /* #swagger.tags = ['
     #swagger.responses[404] = { description: 'Atendimento não encontrado' }
 */ controllerAtendimento.iniciar);
 
-router.patch('/:id/finalizar', ehAutenticado, ehVeterinario, /* #swagger.tags = ['Atendimentos']
+router.post('/:id/finalizar', ehAutenticado, ehVeterinario, /* #swagger.tags = ['Atendimentos']
     #swagger.summary = 'Finaliza um atendimento'
     #swagger.security = [{ BearerAuth: [] }]
     #swagger.parameters['id'] = { in: 'path', required: true, type: 'integer', description: 'ID do atendimento' }
