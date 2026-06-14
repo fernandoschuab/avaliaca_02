@@ -33,6 +33,75 @@
         }
       }
     },
+    "/api/usuarios/cadastro": {
+      "post": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Cadastra um novo usuário",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NovoUsuario"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Usuário cadastrado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/UsuarioCriado"
+            }
+          },
+          "400": {
+            "description": "Dados inválidos ou usuário já cadastrado"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/usuarios/login": {
+      "post": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Autentica o usuário e retorna um token JWT",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginUsuario"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login realizado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/LoginResposta"
+            }
+          },
+          "400": {
+            "description": "Usuário e senha são obrigatórios"
+          },
+          "401": {
+            "description": "Credenciais inválidas"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/api/pets/": {
       "post": {
         "tags": [

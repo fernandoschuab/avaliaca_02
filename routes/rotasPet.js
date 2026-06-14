@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
 const controllerPet = require('../controller/controllerPet.js');
+const { ehAutenticado, ehAdmin, ehRecepcao } = require('../middleware/controleUsuario.js');
 
-router.post('/', /* #swagger.tags = ['Pets']
+router.post('/', ehAutenticado, ehAdmin, /* #swagger.tags = ['Pets']
     #swagger.summary = 'Cadastra um novo pet'
     #swagger.security = [{ BearerAuth: [] }]
     #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/NovoPet' } }
@@ -12,7 +13,7 @@ router.post('/', /* #swagger.tags = ['Pets']
     #swagger.responses[403] = { description: 'Acesso negado' }
 */ controllerPet.cadastrar);
 
-router.get('/', /* #swagger.tags = ['Pets']
+router.get('/', ehAutenticado, ehRecepcao, /* #swagger.tags = ['Pets']
     #swagger.summary = 'Lista todos os pets'
     #swagger.security = [{ BearerAuth: [] }]
     #swagger.parameters['especie'] = { in: 'query', description: 'Filtrar por espécie', type: 'string' }

@@ -3,7 +3,7 @@ const { Atendimento, Pet } = require('../model/modelos.js');
 exports.cadastrar = async function (req, res) {
     const dados = {
         pet_id: req.body.pet_id,
-        usuario_id: req.body.usuario_id,
+        usuario_id: req.user.id,
         data_hora: req.body.data_hora,
         motivo: req.body.motivo,
     };
@@ -12,10 +12,6 @@ exports.cadastrar = async function (req, res) {
 
     if (!dados.pet_id) {
         errors.push({ msg: 'Pet é obrigatório' });
-    }
-
-    if (!dados.usuario_id) {
-        errors.push({ msg: 'Usuário é obrigatório' });
     }
 
     if (!dados.data_hora || dados.data_hora.trim() === '') {
