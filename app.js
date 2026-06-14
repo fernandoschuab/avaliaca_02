@@ -7,6 +7,7 @@ var logger = require('morgan');
 var swagger = require('swagger-ui-express');
 var swagger_saida = require('./config/swagger_output.json');
 var { passport } = require('./config/passport');
+var configuracaoHelmet = require('./config/helmet');
 
 require('./model/modelos.js');
 
@@ -16,6 +17,8 @@ var rotasPet = require('./routes/rotasPet');
 var rotasAtendimento = require('./routes/rotasAtendimento');
 
 var app = express();
+
+app.use(configuracaoHelmet(process.env.ENV === 'prod'));
 
 app.use(logger('dev'));
 app.use(express.json());
