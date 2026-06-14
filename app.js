@@ -8,6 +8,8 @@ var logger = require('morgan');
 require('./model/modelos.js');
 
 var rotasIndex = require('./routes/rotasIndex');
+var rotasPet = require('./routes/rotasPet');
+var rotasAtendimento = require('./routes/rotasAtendimento');
 
 var app = express();
 
@@ -18,5 +20,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', rotasIndex);
+app.use('/api/pets', rotasPet);
+app.use('/api/atendimentos', rotasAtendimento);
 
 module.exports = app;
