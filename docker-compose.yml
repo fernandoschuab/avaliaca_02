@@ -1,0 +1,17 @@
+services:
+  db:
+    image: mysql:9.3
+    container_name: vetcare_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: vetcare_api
+      MYSQL_USER: avaliacao_fullstack
+      MYSQL_PASSWORD: avaliacao_fullstack
+    ports:
+      - "3306:3306"
+    volumes:
+      - vetcare_data:/var/lib/mysql
+
+volumes:
+  vetcare_data:
