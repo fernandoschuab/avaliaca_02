@@ -6,6 +6,7 @@ exports.index = async function (req, res) {
         tecnologias: ['Node.js', 'Express', 'Sequelize', 'JWT', 'Swagger'],
         status: 'online',
         timestamp: new Date().toLocaleString(),
+        documentacao: `${req.protocol}://${req.get('host')}/api-docs`,
     };
 
     res.set('Cache-Control', 'no-store');

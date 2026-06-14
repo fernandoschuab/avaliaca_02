@@ -1,0 +1,488 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "VetCare API",
+    "version": "1.0.0",
+    "description": "API RESTful para gerenciamento de pets e atendimentos veterinários com autenticação JWT"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "description": "Informe o token JWT no formato: Bearer <token>"
+    }
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Index"
+        ],
+        "summary": "Informações sobre o serviço",
+        "description": "Retorna informações gerais sobre a API VetCare",
+        "responses": {
+          "200": {
+            "description": "Informações do serviço retornadas com sucesso"
+          }
+        }
+      }
+    },
+    "/api/pets/": {
+      "post": {
+        "tags": [
+          "Pets"
+        ],
+        "summary": "Cadastra um novo pet",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NovoPet"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Pet cadastrado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/Pet"
+            }
+          },
+          "400": {
+            "description": "Dados inválidos"
+          },
+          "401": {
+            "description": "Não autenticado"
+          },
+          "403": {
+            "description": "Acesso negado"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Pets"
+        ],
+        "summary": "Lista todos os pets",
+        "description": "",
+        "parameters": [
+          {
+            "name": "especie",
+            "in": "query",
+            "description": "Filtrar por espécie",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de pets retornada com sucesso",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Pet"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autenticado"
+          },
+          "403": {
+            "description": "Acesso negado"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/atendimentos/": {
+      "post": {
+        "tags": [
+          "Atendimentos"
+        ],
+        "summary": "Cadastra um novo atendimento",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NovoAtendimento"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Atendimento cadastrado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/Atendimento"
+            }
+          },
+          "400": {
+            "description": "Dados inválidos"
+          },
+          "401": {
+            "description": "Não autenticado"
+          },
+          "403": {
+            "description": "Acesso negado"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/atendimentos/{id}": {
+      "get": {
+        "tags": [
+          "Atendimentos"
+        ],
+        "summary": "Consulta atendimento por ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID do atendimento"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Atendimento retornado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/Atendimento"
+            }
+          },
+          "400": {
+            "description": "ID inválido"
+          },
+          "401": {
+            "description": "Não autenticado"
+          },
+          "403": {
+            "description": "Acesso negado"
+          },
+          "404": {
+            "description": "Atendimento não encontrado"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/atendimentos/{id}/iniciar": {
+      "patch": {
+        "tags": [
+          "Atendimentos"
+        ],
+        "summary": "Inicia um atendimento",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID do atendimento"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Atendimento iniciado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/Atendimento"
+            }
+          },
+          "400": {
+            "description": "ID inválido ou atendimento já iniciado"
+          },
+          "401": {
+            "description": "Não autenticado"
+          },
+          "403": {
+            "description": "Acesso negado"
+          },
+          "404": {
+            "description": "Atendimento não encontrado"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/atendimentos/{id}/finalizar": {
+      "patch": {
+        "tags": [
+          "Atendimentos"
+        ],
+        "summary": "Finaliza um atendimento",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID do atendimento"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Atendimento finalizado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/Atendimento"
+            }
+          },
+          "400": {
+            "description": "ID inválido ou atendimento já finalizado"
+          },
+          "401": {
+            "description": "Não autenticado"
+          },
+          "403": {
+            "description": "Acesso negado"
+          },
+          "404": {
+            "description": "Atendimento não encontrado"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "NovoUsuario": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "example": "Admin"
+        },
+        "usuario": {
+          "type": "string",
+          "example": "admin"
+        },
+        "senha": {
+          "type": "string",
+          "example": "senha123"
+        },
+        "perfil": {
+          "type": "string",
+          "example": "admin"
+        }
+      }
+    },
+    "UsuarioCriado": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "nome": {
+          "type": "string",
+          "example": "Admin"
+        },
+        "usuario": {
+          "type": "string",
+          "example": "admin"
+        },
+        "perfil": {
+          "type": "string",
+          "example": "admin"
+        }
+      }
+    },
+    "LoginUsuario": {
+      "type": "object",
+      "properties": {
+        "usuario": {
+          "type": "string",
+          "example": "admin"
+        },
+        "senha": {
+          "type": "string",
+          "example": "senha123"
+        }
+      }
+    },
+    "LoginResposta": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        },
+        "usuario": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "example": 1
+            },
+            "nome": {
+              "type": "string",
+              "example": "Admin"
+            },
+            "usuario": {
+              "type": "string",
+              "example": "admin"
+            },
+            "perfil": {
+              "type": "string",
+              "example": "admin"
+            }
+          }
+        }
+      }
+    },
+    "NovoPet": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "example": "Spike"
+        },
+        "especie": {
+          "type": "string",
+          "example": "cachorro"
+        }
+      }
+    },
+    "Pet": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "nome": {
+          "type": "string",
+          "example": "Spike"
+        },
+        "especie": {
+          "type": "string",
+          "example": "cachorro"
+        },
+        "criada_em": {
+          "type": "string",
+          "example": "2026-06-12T01:35:18.586Z"
+        },
+        "atualizada_em": {
+          "type": "string",
+          "example": "2026-06-12T01:35:18.586Z"
+        }
+      }
+    },
+    "NovoAtendimento": {
+      "type": "object",
+      "properties": {
+        "pet_id": {
+          "type": "number",
+          "example": 1
+        },
+        "data_hora": {
+          "type": "string",
+          "example": "2026-06-11T14:30:00.000Z"
+        },
+        "motivo": {
+          "type": "string",
+          "example": "Consulta de rotina e vacinação"
+        }
+      }
+    },
+    "Atendimento": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "data_hora": {
+          "type": "string",
+          "example": "2026-06-11T14:30:00.000Z"
+        },
+        "motivo": {
+          "type": "string",
+          "example": "Consulta de rotina e vacinação"
+        },
+        "status": {
+          "type": "string",
+          "example": "agendado"
+        },
+        "pet_id": {
+          "type": "number",
+          "example": 1
+        },
+        "usuario_id": {
+          "type": "number",
+          "example": 1
+        },
+        "criada_em": {
+          "type": "string",
+          "example": "2026-06-12T01:45:19.000Z"
+        },
+        "atualizada_em": {
+          "type": "string",
+          "example": "2026-06-12T01:45:19.000Z"
+        }
+      }
+    }
+  }
+}
